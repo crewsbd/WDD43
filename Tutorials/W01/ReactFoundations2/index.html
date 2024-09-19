@@ -9,21 +9,19 @@
 
       function Header({title}) {
           console.log(title);
-          return (<h1>{title? title: 'Default title'}</h1>)
+          return (<h1>{title? title: 'Default title'}</h1>);
       }
-
 
       function HomePage() {
         const names = ['Charles Babbage', 'Alick Glennie', 'Margaret Hamilton' ];
-
         const [likes, setLikes] = React.useState(0);
-
         function handleClick() {
             console.log('Increment like count');
             setLikes(likes + 1);
         }
 
-        return <div>
+        return ( 
+          <div>
             <Header title="React"/>
             <ul>
                 {   names.map((name) => (   
@@ -32,11 +30,12 @@
                 }
             </ul>
             <button onClick={handleClick}>Like({likes})</button>
-        </div>;
+          </div> 
+          );
       }
 
       const root = ReactDOM.createRoot(app);
-      root.render(<HomePage/>);
+      root.render(<HomePage />);
     </script>
   </body>
 </html>
