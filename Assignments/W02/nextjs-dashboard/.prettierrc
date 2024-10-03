@@ -1,0 +1,6 @@
+{
+  "singleQuote": true,
+  "semi": true,
+  "files": "**/*.{ts,tsx,js,jsx}",
+  "tabWidth": 2
+}
