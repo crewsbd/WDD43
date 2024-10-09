@@ -13,19 +13,18 @@ import { createInvoice, State } from '@/app/lib/actions';
 import { useActionState, useEffect, useState } from 'react';
 
 export default function Form({ customers }: { customers: CustomerField[] }) {
+  console.log('FORM RELOAD');
   const initialState: State = {
     message: null,
-    formData: {
-      customerId: '',
-      amount: '',
-      status: '',
-    },
     errors: {},
   };
 
+  const [customerId, changeCustomerId] = useState('');
+  const [amount, changeAmount] = useState('');
+  const [status, changeStatus] = useState('');
+
   const [state, formAction] = useActionState(createInvoice, initialState);
 
-  console.log(state.formData);
   return (
     <form action={formAction}>
       <div className="rounded-md bg-gray-50 p-4 md:p-6">
@@ -36,11 +35,15 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
           </label>
           <div className="relative">
             <select
-              id="customer"
+              id="customerId"
               name="customerId"
               className="peer block w-full cursor-pointer rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
-              //defaultValue={state.formData?.customerId}
-              defaultValue={state.formData?.customerId}
+              //value={customerId}
+              value={customerId}
+              onChange={(e) => {
+                console.log('New value ', e.target.value);
+                changeCustomerId(e.target.value);
+              }}
               aria-describedby="customer-error"
             >
               <option value="" disabled>
@@ -76,7 +79,11 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                 name="amount"
                 type="number"
                 step="0.01"
-                defaultValue={state.formData?.amount}
+                //defaultValue={state.formData?.amount}
+                value={amount}
+                onChange={(e) => {
+                  changeAmount(e.target.value);
+                }}
                 placeholder="Enter USD amount"
                 className="peer block w-full rounded-md border border-gray-200 py-2 pl-10 text-sm outline-2 placeholder:text-gray-500"
                 aria-describedby="invoice-error"
@@ -107,7 +114,12 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="pending"
-                  defaultChecked={state.formData?.status === 'pending'}
+                  //defaultChecked={state.formData?.status === 'pending'}
+                  defaultChecked={status === 'pending'}
+                  onChange={(e) => {
+                    console.log('Pending Changed');
+                    changeStatus(e.target.value);
+                  }}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
@@ -123,7 +135,12 @@ export default function Form({ customers }: { customers: CustomerField[] }) {
                   name="status"
                   type="radio"
                   value="paid"
-                  defaultChecked={state.formData?.status === 'paid'}
+                  //defaultChecked={state.formData?.status === 'paid'}
+                  defaultChecked={status === 'paid'}
+                  onChange={(e) => {
+                    console.log('paid changed');
+                    changeStatus(e.target.value);
+                  }}
                   className="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-gray-600 focus:ring-2"
                 />
                 <label
